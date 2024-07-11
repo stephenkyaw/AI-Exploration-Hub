@@ -166,3 +166,8 @@ cython_debug/
 .sqlite
 langgrap/customer_support/travel2.backup.sqlite
 langgrap/customer_support/travel2.sqlite
+langgrap_agentic/customer_support/travel2.backup.sqlite
+langgrap_agentic/customer_support/travel2.sqlite
+travel2.sqlite
+travel2.backup.sqlite
+*.sqlite
