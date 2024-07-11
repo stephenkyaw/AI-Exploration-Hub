@@ -29,22 +29,18 @@ tutorial_questions = [
 shutil.copy(backup_file, db)
 thread_id = str(uuid.uuid4())
 
-config = {
-    "configurable": {
-        # The passenger_id is used in our flight tools to
-        # fetch the user's flight information
-        #"passenger_id": "3442 587242",
-        "passenger_id": "8149 604011",
-        # Checkpoints are accessed by thread_id
-        "thread_id": thread_id,
-    }
-}
+while True:
+    user_input = input("User : ")
+    if user_input.lower() in ["quit", "exit", "q"]:
+        print("Goodbye!")
+        break
 
-
-_printed = set()
-for question in tutorial_questions:
+    config = { "configurable": {"passenger_id": "8149 604011","thread_id": thread_id,}}
+    _printed = set()
+    # The config is the **second positional argument** to stream() or invoke()!
     events = graph.stream(
-        {"messages": ("user", question)}, config, stream_mode="values"
+        {"messages": [("user", user_input)]}, config, stream_mode="values"
     )
     for event in events:
-        _print_event(event, _printed)
+        if "messages" in event:
+              _print_event(event, _printed)
