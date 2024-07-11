@@ -1,9 +1,13 @@
+from dotenv import load_dotenv
 from datetime import datetime
 
 from langchain_openai import ChatOpenAI
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import Runnable, RunnableConfig
+
+# .env load
+load_dotenv()
 
 #import state
 from  agent_state import State
@@ -14,8 +18,6 @@ from car_rental_tool import(search_car_rentals,update_car_rental,book_car_rental
 from lookup_policy_tool import (lookup_policy)
 from hotel_tool import (search_hotels,update_hotel,book_hotel,cancel_hotel)
 from excursions_tool import ( search_trip_recommendations,book_excursion,update_excursion,cancel_excursion)
-
-
 
 # create assistant agent
 class Assistant:

@@ -5,3 +5,4 @@ langchain_openai
 tavily-python
 pandas
 jupyterlab
+load_dotenv

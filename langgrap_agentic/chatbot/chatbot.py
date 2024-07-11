@@ -11,6 +11,10 @@ from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.sqlite import SqliteSaver
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 memory = SqliteSaver.from_conn_string(":memory:")
 
 class State(TypedDict):
