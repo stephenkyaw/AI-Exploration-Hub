@@ -3,4 +3,4 @@ langsmith
 langchain_community
 langchain_openai
 tavily-python
-load_dotenv
+python-dotenv
