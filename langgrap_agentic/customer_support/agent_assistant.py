@@ -13,11 +13,14 @@ load_dotenv()
 from  agent_state import State
 
 #import tools
-from flight_tool import(fetch_user_flight_information,search_flights,update_ticket_to_new_flight,cancel_ticket)
-from car_rental_tool import(search_car_rentals,update_car_rental,book_car_rental,cancel_car_rental)
-from lookup_policy_tool import (lookup_policy)
-from hotel_tool import (search_hotels,update_hotel,book_hotel,cancel_hotel)
-from excursions_tool import ( search_trip_recommendations,book_excursion,update_excursion,cancel_excursion)
+# from flight_tool import(fetch_user_flight_information,search_flights,update_ticket_to_new_flight,cancel_ticket)
+# from car_rental_tool import(search_car_rentals,update_car_rental,book_car_rental,cancel_car_rental)
+# from lookup_policy_tool import (lookup_policy)
+# from hotel_tool import (search_hotels,update_hotel,book_hotel,cancel_hotel)
+# from excursions_tool import ( search_trip_recommendations,book_excursion,update_excursion,cancel_excursion)
+
+#import tools
+from agent_tools import (safe_tools,sensitive_tools,sensitive_tool_names)
 
 # create assistant agent
 class Assistant:
@@ -42,7 +45,7 @@ class Assistant:
                 not result.content
                 or isinstance(result.content, list)
                 and not result.content[0].get("text")
-            ):
+            ):            
                 messages = state["messages"] + [("user", "Respond with a real output.")]
                 state = {**state, "messages": messages}
             else:
@@ -68,25 +71,27 @@ primay_assistant_prompt = ChatPromptTemplate.from_messages(
     ]
 ).partial(time=datetime.now())
 
-tools = [
-    TavilySearchResults(max_results=1),
-    fetch_user_flight_information,
-    search_flights,
-    lookup_policy,
-    update_ticket_to_new_flight,
-    cancel_ticket,
-    search_car_rentals,
-    book_car_rental,
-    update_car_rental,
-    cancel_car_rental,
-    search_hotels,
-    book_hotel,
-    update_hotel,
-    cancel_hotel,
-    search_trip_recommendations,
-    book_excursion,
-    update_excursion,
-    cancel_excursion
-]
+# tools = [
+#     TavilySearchResults(max_results=1),
+#     fetch_user_flight_information,
+#     search_flights,
+#     lookup_policy,
+#     update_ticket_to_new_flight,
+#     cancel_ticket,
+#     search_car_rentals,
+#     book_car_rental,
+#     update_car_rental,
+#     cancel_car_rental,
+#     search_hotels,
+#     book_hotel,
+#     update_hotel,
+#     cancel_hotel,
+#     search_trip_recommendations,
+#     book_excursion,
+#     update_excursion,
+#     cancel_excursion
+# ]
 
-assistant_runnable = primay_assistant_prompt | llm.bind_tools(tools)
+assistant_runnable = primay_assistant_prompt | llm.bind_tools(
+    safe_tools + sensitive_tools
+)
