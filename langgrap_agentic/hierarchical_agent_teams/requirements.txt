@@ -1,0 +1,10 @@
+langsmith
+langgraph
+langchain
+langchain_community
+langchain_openai
+python-dotenv
+langchain_experimental
+matplotlib
+pandas
+beautifulsoup4
