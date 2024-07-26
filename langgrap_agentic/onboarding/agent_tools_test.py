@@ -1,16 +1,16 @@
 import unittest
-from agent_tools import read_pdf
+from agent_tools import load_pdf
 
 
 
 class TestReadPDF(unittest.TestCase):
 
-    def test_read_pdf(self):
+    def test_load_pdf(self):
         # Replace with the path to a sample PDF file for testing
         pdf_path = "./docs/KYAW MYO AUNG RESUME.pdf"
         
         # Call the function
-        pdf_text = read_pdf(pdf_path)
+        pdf_text = load_pdf(pdf_path)
         
         # Perform assertions to verify the expected behavior
         self.assertIsInstance(pdf_text, str)

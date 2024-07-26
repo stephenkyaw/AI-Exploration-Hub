@@ -1,0 +1,9 @@
+langgraph
+langsmith
+langchain
+langchain_community
+langchain_openai
+tavily-python
+jupyterlab
+python-dotenv
+PyMuPDF

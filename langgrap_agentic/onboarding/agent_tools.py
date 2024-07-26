@@ -1,32 +1,36 @@
-from pymupdf import pymupdf
+from langchain_core.tools import tool
+from langchain_community.document_loaders import PyMuPDFLoader
 
-def read_pdf(file_path):
+
+def load_pdf(file_path):
     """
-    Reads a PDF file and returns the concatenated text content of all pages.
+    Loads a PDF file and returns the content of all pages.
     
     Parameters:
     - file_path (str): Path to the PDF file.
     
     Returns:
-    - str: Concatenated text content of all pages.
+    - str: Combined text content of all pages of the PDF, or an error message if something goes wrong.
     """
     try:
-        # Open the PDF file
-        document = pymupdf.open(file_path)
+        # Initialize the PDF loader
+        loader = PyMuPDFLoader(file_path)
         
-        # Initialize an empty string to store the text
-        full_text = ""
+        # Load the PDF content
+        data = loader.load()
         
-        # Loop through each page
-        for page_num in range(document.page_count):
-            page = document.load_page(page_num)
-            text = page.get_text("text")
-            
-            # Append the text of the current page to full_text
-            full_text += text + "\n\n"  # Add new lines between pages for separation
+        # Check if any pages were loaded
+        if not data:
+            return "No data found in the PDF file."
         
-        return full_text.strip()  # Strip extra whitespace from the beginning and end
-    
+        # Ensure data is a list of Document objects
+        if not isinstance(data, list) or not all(hasattr(page, 'page_content') for page in data):
+            return "Invalid data format."
+        
+        # Combine content of all pages
+        full_text = "\n\n".join(page.page_content for page in data)
+        return full_text
+
     except Exception as e:
-        print(f"An error occurred: {e}")
-        return ""
+        # Return error message if something goes wrong
+        return f"An error occurred: {str(e)}"
