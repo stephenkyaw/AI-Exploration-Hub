@@ -114,7 +114,7 @@ workflow.add_edge("action", "agent")
 
 memory = MemorySaver()
 
-app = workflow.compile(checkpointer=memory,interrupt_before=["action"])
+app = workflow.compile(checkpointer=memory,interrupt_after=["action"])
 
 input = {
     "messages": [
