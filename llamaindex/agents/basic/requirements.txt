@@ -1,0 +1,4 @@
+llama-index
+llama-index-llms-ollama 
+llama-index-callbacks-arize-phoenix
+python-dotenv
